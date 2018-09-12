@@ -63,11 +63,17 @@ One important concept expands upon the R of SMART is the *minimun viable product
   The HCI community recommend using a low-tech approach to user interaces(**Lo-Fi UI**) and **sketches**. It consists of paper, crayons, scissors and other kindergarten tools fo UI mockups.
   Ideally, you make sketches for all the user stories that involve a UI. It may seem tedious, but eventually you are going to have to specify all the UI details using HTML to make the real UI, and it's a lot easier to get it right with pencil and paper than with code.
   To show how the sketches work together as users interacts with a page we use **storyboarding**. Instead of a linear sequence of images, the storyboard for a UI is tipically a tree or graph of screen driven by different user choices.
-  
+
   To make it you need:
     * Pages or sections of pages.
     * Forms and buttons
     * Popups
+
+### 7.5 Agile Cost Estimation
+
+  The books gives an example of how Pivotal Labs works. They explain how they work in a phone call of 30 to 60 minutes. If the client and their team feels comfortable, they do a *scoping". Scoping is a roughly 90 minutes conversations with potential client, preferably in person. The Agile team ask the client to bring everyone who would give valuable information about the project. During it, the Agile team asks what what the client want done and a series of questions to identify risks, external integrations and so forth.  The lesser the risks and external integrations higher is the precision of weeks they give the client.
+
+
 
 
   [1]:https://www.pivotaltracker.com/
