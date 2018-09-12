@@ -29,3 +29,15 @@
       as a [kind of stakeholder],
       so that [I can achieve some goal],
       I want to [do some task]
+
+### 7.2 POints, Velocity, and Pivotal Tracker
+  The **backlog** is the name of the collection of stories that have not yet been completed in this iteration.
+  **Velocity** measures work rate based on the team's self-evaluation. As long as the team rates user stories consistently, it doesn't matter whether the team is completing 5 points or 10 points per iteration. The purpose is to give all stakeholders an idea how many iterations it will take a team to add the desired set of features, which hepls set reasonable expectations and reduces chances of disappointement.
+  
+  [Pivotal Tracker][1] is a service that tracks user stories and velocity. You can also use 
+  [Trello][2] which offer some of it's features for free.
+
+
+
+  [1]:https://www.pivotaltracker.com/
+  [2]:https://trello.com/
