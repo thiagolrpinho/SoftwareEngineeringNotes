@@ -74,6 +74,36 @@ One important concept expands upon the R of SMART is the *minimun viable product
   The books gives an example of how Pivotal Labs works. They explain how they work in a phone call of 30 to 60 minutes. If the client and their team feels comfortable, they do a *scoping". Scoping is a roughly 90 minutes conversations with potential client, preferably in person. The Agile team ask the client to bring everyone who would give valuable information about the project. During it, the Agile team asks what what the client want done and a series of questions to identify risks, external integrations and so forth.  The lesser the risks and external integrations higher is the precision of weeks they give the client.
 
 
+### 7.6 Introducing Cucumber and Capybara
+  
+  **Cucumber** turns customer-understandable user stories into **acceptance tests** and **integrations tests**. The first is to ensure the customer is satisfied and the later is to ensure that the interfaces between modules have consistent assumptions and communicate correctly.
+  In the Cucumber context we will use the term **user story** to refer to a single **feature** with one or more **scenarios** that show different ways a feature is used. Feature and Scenario idetify the respective components. Each scenario is in turn composed of a sequence of 3 to 8 **steps**.
+
+  **Cucumber Keywords** - **Given**,**When**, **Then**, and **But** have diffrerent names just for benefit of human readers, but they are all aliases to the same method.
+
+  Each step of a scenario start with its own keyword. * Steps that start with **Given** usually set up some precoditions, such as navigating to a page.
+  * Steps that start with **When** typically use one of Cucumber's built-in web steps to simulate the user pressing a button, for example.
+  * Steps that start with **Then** will usually check to see if some condition is true. 
+  * The conjunction **And** allows more complicated versions of Given, When, or Then phrases. The only other keyword you see in this format if **But**.
+
+  **Example**
+    Feature: User can manually add movie
+
+    Scenario: Add a movie
+      Given I am on the RottenPotatoes home page
+      When I follow "Added new movie"
+      Then I should be on the Create New Movie page
+      When I fill in "Title" with "Men in Black"
+      And I select "PG-13" from "Rating"
+      And I press "Save Changes"
+      Then I should be on the RottenPotatoes home page
+      And I should see "Men in Black"
+  
+  A separate set of files defines the Ruby code that tests these steps. These are called **step defitinitions**. Generally, many steps can use a single step definition.
+
+  Cucumber match the steps of the scenarios with the step definitions using regular expressions or **regexes**(Chapter 3). They match the English phrases in the steps of the scenarios to the step definitions of the testing harness.
+
+  In the Rails world, **Capybara** simulates a user interaction and integrates seamlessly with Cucumber. It takes actions in a simulated web browser, for example, clicking on a link or button. Capybara can interact with the app to receive pages, parse the HTML, and submit forms as a user would.
 
 
   [1]:https://www.pivotaltracker.com/
