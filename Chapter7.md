@@ -59,6 +59,16 @@
 
 One important concept expands upon the R of SMART is the *minimun viable product*(MVP). It's a subset of the full set of features that when completed has business value in the real world.
 
+### 7.4 Lo-Fi User INterface Sketches and Storyboards
+  The HCI community recommend using a low-tech approach to user interaces(**Lo-Fi UI**) and **sketches**. It consists of paper, crayons, scissors and other kindergarten tools fo UI mockups.
+  Ideally, you make sketches for all the user stories that involve a UI. It may seem tedious, but eventually you are going to have to specify all the UI details using HTML to make the real UI, and it's a lot easier to get it right with pencil and paper than with code.
+  To show how the sketches work together as users interacts with a page we use **storyboarding**. Instead of a linear sequence of images, the storyboard for a UI is tipically a tree or graph of screen driven by different user choices.
+  
+  To make it you need:
+    * Pages or sections of pages.
+    * Forms and buttons
+    * Popups
+
 
   [1]:https://www.pivotaltracker.com/
   [2]:https://trello.com/
