@@ -123,7 +123,29 @@ One important concept expands upon the R of SMART is the *minimun viable product
   Cucumber comes with a *generator*, to set the directories and files that Capybara and Cucumber needs. To run the generators go to your app's directory and run:
     rails generate cucumber:install capybara
     rails generate cucumber_rails_training_wheels:install
+  Then you must update your database.
+    rails db:migrate
+    rails db:test:prepare
+  After you add to your AddMovie.feature file this user story
+    Feature: User can manually add movie
 
+    Scenario: Add a movie
+      Given I am on the RottenPotatoes home page
+      When I follow "Add new movie"
+      Then I should be on the Create New Movie page
+      When I fill in "title" with "Men in Black"
+      And I select "PG-13" from "rating"
+      And I press "Save Changes"
+      Then I should be on the RottenPotatoes home page
+      And I should see "Men In Black"
+  
+  I had some problems using the gem Uglifier so I needed install nodejs
+    sudo apt install nodejs
+  And after that i18n gem had to be updated so I run
+    bundle update
+  Then I run
+    cucumber
+  And edited the features and paths until I got all steps green.
 
   [1]:https://www.pivotaltracker.com/
   [2]:https://trello.com/
