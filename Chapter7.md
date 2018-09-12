@@ -105,6 +105,25 @@ One important concept expands upon the R of SMART is the *minimun viable product
 
   In the Rails world, **Capybara** simulates a user interaction and integrates seamlessly with Cucumber. It takes actions in a simulated web browser, for example, clicking on a link or button. Capybara can interact with the app to receive pages, parse the HTML, and submit forms as a user would.
 
+### 7.7 Running Cucumber and Capybara
+
+  A major benefit of user stories in Cucumber is **Red-Yellow-Green analysis**, Once a user story is written, we can try to run it immediately. In the the beginning, steps may initially be highlighted either in Red(for failing) or Yellow(for passing), by incrementally adding what's needed to make it pass.
+  **Cucumbers are green** The test-passing color of the cucumber plant gives this tool its name.
+
+  **Piece of code to use cucumber on your application**
+    group	:test,	:development	do				
+      gem	'cucumber-rails'
+      gem	'cucumber-rails-training-wheels'	#	some	pre-fabbed	step	definitions
+      gem	'database_cleaner'	#	to	clear	Cucumber's	test	database	between	runs
+      gem	'capybara'									#	lets	Cucumber	pretend	to	be	a	web	browser
+      gem	'launchy'										#	a	useful	debugging	aid	for	user	stories
+    end
+
+  Copy it to to your *gemfile* and run *bundle install*.
+  Cucumber comes with a *generator*, to set the directories and files that Capybara and Cucumber needs. To run the generators go to your app's directory and run:
+    rails generate cucumber:install capybara
+    rails generate cucumber_rails_training_wheels:install
+
 
   [1]:https://www.pivotaltracker.com/
   [2]:https://trello.com/
