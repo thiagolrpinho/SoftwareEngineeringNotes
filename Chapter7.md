@@ -21,3 +21,11 @@
   The BDD Version of requiriments is **user stories**, which describe how the application is expected to be used. In BDD the stories take the place of design documents in plan-and-document.
 
   By concentrating on *behavior* of the application versus the *implementation* of application.
+  The general guidelines for the user stories is that they must be **testable**, **small** to be implemented in one iteration and have **business value**.
+
+* **User Story Format**
+
+    Feature name
+      as a [kind of stakeholder],
+      so that [I can achieve some goal],
+      I want to [do some task]
