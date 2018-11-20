@@ -93,6 +93,79 @@ If we deleted the *and_return* part the method stub would return *nil*.
 ## 8.4 Expectations, Mocks, Stubs, and Example Setup & Teardown
 
 Following the last example. Since the default behavior of the method MoviesController#search_tmdb is to attempt to render the view app/views/movies/search_tmdb.html.erb, our spec just needs to verify that the controller action will indeed try to render that view template. To do this we will use the response method of RSpec: once we have done a get or post action a controller spec, the object a returned by the response method will contain the app server's response to that action, and we can assert and expectation that the response *would* have *rendered* a particular view.
-To do this kind of assertion Rspec uses the *object*.**should** *match-condition* format. Let's alter last example code:
+To do this kind of assertion Rspec uses the *object*.**should** *match-condition* format. Let's alter last example code so it can be like this:
 
-PÁGINA 333 - EXEMPLO 8.6
+    require 'spec_helper'
+    describe MoviesController do
+      describe 'searching TMDb' do
+        it 'should call the model method that performs TMDb search' do
+          fake_results = [mock('movie1'), mock('movie2')]
+          Movie.should_receive(:find_in_tmdb).with('hardware').
+            and_return(fake_results)
+          post :search_tmdb, {:search_terms => 'hardware'}
+        end
+        it 'should select the Search Results template for rendering' do
+          fake_results = [mock('Movie'), mock('Movie')]
+          Movie.stub(:find_in_tmdb).and_return(fake_results)
+          post :search_tmdb, {:search_terms => 'hardware'}
+          response.should render_template('search_tmdb')
+        end
+        it 'should make the TMDb search results available to that template'
+      end
+    end
+
+Notice that as the tests should be self-contaneid and **I**ndependent, we have to create the test doubles and perfom the post command separately in each. Second, whereas the first example uses *should_receive*, the second example uses **stub**, which creates a test double for a method but doens't establish an expectation that that method will necessarily be called. So if it's not called it will not raise an error.  
+The use of two different methods on above examples ilustrates the need to test a *single behavior*. The second one is *only* checking that the correct view is selected for rendering. It's *not* checking that the approppriate model methods gets called.  So even if *Movie.find_in_tmdb* was actually implemented, we'd still stub it out in this test.
+To stay **DRY** we could use the block **before(:each)** or before(:all) - Which have different behaviors. The first runs before each test and the later just once before all tests. The code should look like this after refactoring with *before(:each)* now:  
+
+    require 'spec_helper'
+    
+    describe MoviesController do
+      describe 'searching TMDb' do
+        before :each do
+          @fake_results = [mock('movie1'), mock('movie2')]
+        end
+        it 'should call the model method that performs TMDb search' do
+          Movie.should_receive(:find_in_tmdb).with('hardware').
+            and_return(@fake_results)
+          post :search_tmdb, {:search_terms => 'hardware'}
+        end
+        it 'should select the Search Results template for rendering' do
+          Movie.stub(:find_in_tmdb).and_return(@fake_results)
+          post :search_tmdb, {:search_terms => 'hardware'}
+          response.should render_template('search_tmdb')
+        end
+        it 'should make the TMDb search results available to that template'
+      end
+    end
+
+Still following the same example scenario. There's just one test case left. To verify if an instance variable was correctly assigned inside the controller method we can use the RSpec **assigns()**. It returns the value stored in the instance variable with same name passed as argument. For example:
+
+    require 'spec_helper'
+    
+    describe MoviesController do
+      describe 'searching TMDb' do
+        before :each do
+          @fake_results = [mock('movie1'), mock('movie2')]
+        end
+        it 'should call the model method that performs TMDb search' do
+          Movie.should_receive(:find_in_tmdb).with('hardware').
+            and_return(@fake_results)
+          post :search_tmdb, {:search_terms => 'hardware'}
+        end
+        describe 'after valid search' do
+          before :each do
+            Movie.stub(:find_in_tmdb).and_return(@fake_results)
+            post :search_tmdb, {:search_terms => 'hardware'}
+          end
+          it 'should select the Search Results template for rendering' do
+            response.should render_template('search_tmdb')
+          end
+          it 'should make the TMDb search results available to that template' do
+            assigns(:movies).should == @fake_results
+          end
+        end
+      end
+    end
+
+Notice how assigns(:movies) returns the value inside @movies.
