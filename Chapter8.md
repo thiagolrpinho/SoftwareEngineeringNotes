@@ -169,3 +169,53 @@ Still following the same example scenario. There's just one test case left. To v
     end
 
 Notice how assigns(:movies) returns the value inside @movies.
+
+## 8.5 Fixtures and Factories
+
+While testing, you may find youserlf testing objects attributes after some behavior. One of the possible approaches is to use **fixtures**. They're a fixed state used as a baseline for one or more tests. A fixture file defines a set of objects that is automatically loaded into the test database before tests are run so you can use those objects in your tests without first setting them up. Like setup and teardown of mocks and stubs, the tests database is erased and reloaded with the fixtures before *each spec*. Rails looks for fixtures in a file containing **YAML** objects.  
+Like this:  
+
+    # spec/fixtures/movies.yml
+    milk_movie:
+      id: 1
+      title: Milk
+      rating: R
+      release_date: 2008-11-26
+    
+    documentary_movie:
+      id: 2
+      title: Food, Inc.
+      release_date: 2008-09-07
+
+To use a fixture on a text, you can do as the example bellow:
+
+    # spec/models/movie_spec.rb:
+    
+    describe Movie do
+      fixtures :movies
+      it 'should include rating and year in full name' do
+        movie = movies(:milk_movie)
+        movie.name_with_rating.should == 'Milk (R)'
+      end
+    end
+
+But unless used carefully, fixtures can interfere with tests being **I**ndependent, as every test now depends implicitly on the fixture state, so changing the fixtures might change the behavior of tests.  
+Many programmers prefer to use a **factory** - a framework designed to allow quick creation of full-featured objects(rather than mocks) at testing time. For example, the popular **FactoryGirl** tool for Rails lets you define a factory for a Movie here:
+
+    # spec/models/movie_spec.rb
+    
+    describe Movie do
+      it 'should include rating and year in full name' do
+        movie = FactoryGirl.build(:movie, :title => 'Milk', :rating => 'R')
+        movie.name_with_rating.should == 'Milk (R)'
+      end
+    end
+    
+    # or if you mix in FactoryGirl's syntax methods (see FactoryGirl README):
+    
+    describe Movie do
+      subject { create :movie, :title => 'Milk', :rating => 'R' }
+      its :name_with_rating { should == 'Milk (R)' }
+    end
+
+PAGINA 340 LOGO APÓS EXMEPLO FIGURA 8.11
