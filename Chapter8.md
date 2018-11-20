@@ -89,3 +89,10 @@ The use of *should_receive* is an example of a **seam**.
 >*“a place where you can alter behavior in your program without editing in that place.”* Feathers 2004)
 
 If we deleted the *and_return* part the method stub would return *nil*.
+
+## 8.4 Expectations, Mocks, Stubs, and Example Setup & Teardown
+
+Following the last example. Since the default behavior of the method MoviesController#search_tmdb is to attempt to render the view app/views/movies/search_tmdb.html.erb, our spec just needs to verify that the controller action will indeed try to render that view template. To do this we will use the response method of RSpec: once we have done a get or post action a controller spec, the object a returned by the response method will contain the app server's response to that action, and we can assert and expectation that the response *would* have *rendered* a particular view.
+To do this kind of assertion Rspec uses the *object*.**should** *match-condition* format. Let's alter last example code:
+
+PÁGINA 333 - EXEMPLO 8.6
